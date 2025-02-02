@@ -1,37 +1,5 @@
 import os
 from typing import Union, List, Dict
-import pytest
-
-# db
-import sqlite3
-
-
-@pytest.fixture
-def files_obj():
-    print("\n\n############### test - Started ###########")
-    yield FilesToDict()
-    print("\n############### test - Ended #############\n\n")
-
-
-class DataBase:
-    """
-    This class knows how to work with Data Base based on SQL:
-     1. create (open) the DB
-     2. insert
-     3. read back
-     4. close DB
-    """
-    def __init__(self, db_name: str) -> None:
-        """
-        create the connection, and the obj that will hold a connection to SQLite database.
-        name of the data base will need to be given by user
-        :param db_name: str
-        """
-        self.conn = sqlite3.connect(db_name)
-        # init of the cursor obj to execute SQL queries
-        self.cursor = self.conn.cursor()
-        self.create_table()
-
     
 
 class FilesToDict:
@@ -116,41 +84,3 @@ class FilesToDict:
         print("\nThe dict is: ")
         for folder, file_name in self.files_dict.items():
             print(f"{folder} : {file_name}")
-
-
-# Parametrized fixture
-@pytest.mark.parametrize("files_path",
-                        [
-                            ("C:\\Users\\PRIVATE_ILANA\\PHYTHON_HOW_TO\\from_interviews\\Files_Travers\\files_folder"),
-                            ("C:\\Users\\PRIVATE_ILANA\\PHYTHON_HOW_TO\\from_interviews\\Files_Travers\\files_folder_single_file")
-                        ])
-def test_travers_path_get_all_files_existing_path_with_files(files_obj, files_path):
-    files_obj.set_working_path(files_path)
-    assert files_obj.validate_tests_folder() is True, "Test failed the validation of the test folder"
-
-    files_list = files_obj.get_files_from_path_into_list()
-    assert len(files_list) > 0, "Test did not foind any test files"
-
-    assert files_obj.get_files_from_list_into_dict(files_list) is True, "Test failed to create dict of tests files"
-    files_obj.print_dict()
-
-# Parametrized fixture
-@pytest.mark.parametrize("incorrect_files_path",
-                        [
-                            ("C:\\Users\\PRIVATE_ILANA\\PHYTHON_HOW_TO\\from_interviews\\Files_Travers\\not_existing_file.txt"),
-                            ("C:\\Users\\PRIVATE_ILANA\\PHYTHON_HOW_TO\\from_interviews\\Files_Travers\\not_existing_files_folder"),
-                            ("C:\\Users\\PRIVATE_ILANA\\PHYTHON_HOW_TO\\from_interviews\\Files_Travers\\empty_files_folder"),
-                            ("C:\\Users\\PRIVATE_ILANA\\PHYTHON_HOW_TO\\from_interviews\\Files_Travers\\files_folder_with_empty_folder")
-                        ])
-def test_travers_path_negative_cases(files_obj, incorrect_files_path):
-    files_obj.set_working_path(incorrect_files_path)
-
-    # AssertionError will occur if the dict will be empty (len = 0) - we will catch it as we expect for it to happen
-    with pytest.raises(AssertionError):
-        assert files_obj.validate_tests_folder() is True, "Test failed the validation of the test folder"
-
-        files_list = files_obj.get_files_from_path_into_list()
-        assert len(files_list) > 0, "Test did not foind any test files"
-
-        assert files_obj.get_files_from_list_into_dict(files_list) is True, "Test failed to create dict of tests files"
-        files_obj.print_dict()

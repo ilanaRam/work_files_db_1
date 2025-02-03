@@ -1,36 +1,35 @@
 import datetime
 import sqlite3
-#import data_base
 from data_base import DataBase
 import pytest
 from model import my_file_model
 
 
 
-#class TestDataBase:
+class TestDataBase:
     
-@pytest.fixture
-def db_member():
-    """
-    fixture that will be called per test twice.
-    first time to create and yield client of the DB (based on SQLite3). second time to close the client
-    Use in-memory SQLite for testing: that stores data in RAM and not on the disk for: speed access, for tests as dat not changing the environment - this is called clean testing
-    """ 
-    db_member = DataBase(":files_store:")
-    yield db_member # it is like return 
-    db_member.close()
+    @pytest.fixture
+    def db_member(self):
+        """
+        fixture that will be called per test twice.
+        first time to create and yield client of the DB (based on SQLite3). second time to close the client
+        Use in-memory SQLite for testing: that stores data in RAM and not on the disk for: speed access, for tests as dat not changing the environment - this is called clean testing
+        """ 
+        db_member = DataBase(":files_store:")
+        yield db_member # it is like return 
+        db_member.close()
 
-@pytest.fixture
-def file_member():
-    return {
-        "source": "test.html",            
-        "date": datetime.now().isoformat()
-    }
+    @pytest.fixture
+    def file_member(self):
+        return {
+            "source": "test.html",            
+            "date": datetime.now().isoformat()
+        }
 
-def test_data_base_init(db_member):
-    # Check if the connection and cursor are initialized
-    assert db_member.conn is not None
-    assert db_member.cursor is not None
+    def test_data_base_init(self, db_member):
+        # Check if the connection and cursor are initialized
+        assert db_member.conn is not None
+        assert db_member.cursor is not None
 
     # def test_create_table(self, db_member):
     #     # create empty table

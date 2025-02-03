@@ -25,5 +25,11 @@ source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 Comments:
 adde .gitignore added to the project
 
-to install all requored packages- requirements.txt file was added, do: 
+Check that was selected correct Python Interpreter: 
+(if in VSCode): Cltrl + Ship + P will be opened a window - inside it select the the venv interpreter and not the difault python installation  
+
+Created requirements.txt file: 
+by cmd:  git freeze > requirements.txt 
+ 
+To install all required packages do: 
 pip install -r requirements.txt

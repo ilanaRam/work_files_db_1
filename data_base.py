@@ -29,9 +29,8 @@ class DataBase:
         # Define SQL query to create a table named 'files_storage'. The cursor will hold the table.
         Each record in the table will have then next columns:
         1.id
-        2.source file (html file)      
-        3.
-        32.date
+        2.source file (html file) 
+        3.date
         
         Each column has requirements
         exp: id must be integer type (it is Primary key for this table)
@@ -52,7 +51,7 @@ class DataBase:
     
 
     def insert(self, sourse_file: str, 
-               transaction_date: str) -> int:
+                                        transaction_date: str) -> int:
         """
         This method is for inserting new record with fields: source, date into table 'files_store'
         :return the id of the newly inserted record
@@ -98,7 +97,7 @@ class DataBase:
         return my_files
     
 
-    def get_conversions_by_id(self, id: int) -> my_file_model:
+    def get_file_by_id(self, id: int) -> my_file_model:
         """
         This method receives id of the record in the table "conversions" and retrieves a record conversion
         retrieve can fail if id isnt in the table

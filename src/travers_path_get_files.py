@@ -3,6 +3,11 @@ from typing import Union, List, Dict
     
 
 class FilesToDict:
+    """
+    class reads files from a dcitionary 
+    hh(should be  a part of the project in Git) and arranges in the dict + adds to dict
+    """
+
     def __init__(self):
         self.working_path: str = None
         self.files_dict: Dict = {}

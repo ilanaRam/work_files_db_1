@@ -1,6 +1,6 @@
 import datetime
 import pytest
-from travers_path_get_files import FilesToDict
+from src.travers_path_get_files import FilesToDict
 
 
 class TestFilesToDict:    

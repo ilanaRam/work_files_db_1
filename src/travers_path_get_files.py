@@ -12,7 +12,7 @@ class FilesToDict:
         self.working_path: str = None
         self.files_dict: Dict = {}
 
-    def set_working_path(self, working_path: str):
+    def set_working_path(self, working_path: str):        
         self.working_path = os.getcwd() + working_path
         print(f"\n\nWorking folder defined as: {self.working_path}")
 
@@ -87,3 +87,6 @@ class FilesToDict:
         print("\nThe dict is: ")
         for folder, file_name in self.files_dict.items():
             print(f"{folder} : {file_name}")
+    
+    def get_files_dict(self):
+        return self.files_dict

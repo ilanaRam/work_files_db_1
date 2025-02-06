@@ -16,7 +16,7 @@ class TestDataBase:
         Use in-memory SQLite for testing: that stores data in RAM and not on the disk for: speed access, for tests as dat not changing the environment - this is called clean testing
         """ 
         print("\n++++++++ START TEST +++++++++++++++++++++++")
-        db_member = db.DataBase(":memory:")
+        db_member = db.DataBase('files_store.db')# ":memory:"
         yield db_member # it is like return 
         db_member.close()
         print("\n+++++++ END TEST ++++++++++++++++++++++++\n")
@@ -26,7 +26,8 @@ class TestDataBase:
     def file_record(self):
         return {
                 "source_file": "test.html",
-                "date": time.strftime("%Y-%m-%d %H:%M:%S")}
+                "date": time.strftime("%Y-%m-%d %H:%M:%S")
+                }
                
 
     def test_data_base_init(self, db_member):
@@ -36,9 +37,9 @@ class TestDataBase:
         for tests as it doesnt changing the environment 
         so called -> clean testing 
         """
-        assert db_member.conn is not None
+        assert db_member.connection is not None
         assert db_member.cursor is not None
-        db_member.close()
+        db_member.close() # probably not needed as this operation is already done in fixture: db_member
 
     def test_get_empty_table_single_file(self, db_member):
         """

@@ -13,17 +13,17 @@ class TestFilesToDict:
         
 
     #Parametrized fixture
-    @pytest.mark.parametrize("files_path",
+    @pytest.mark.parametrize("files_path", # <---- this is a name of the fixture, each time the fixture will hold 1 path to test by a test
                             [
-                                (r"C:\Users\PRIVATE_ILANA\PHYTHON_HOW_TO\_repos\work_files_db_1\resources\Files_Travers\files_folder"),
-                                (r"C:\Users\PRIVATE_ILANA\PHYTHON_HOW_TO\_repos\work_files_db_1\resources\Files_Travers\files_folder_single_file")
+                                (r"\resources\Files_Travers\files_folder"),
+                                (r"\resources\Files_Travers\files_folder_single_file")
                             ])
     def test_travers_path_get_all_files_existing_path_with_files(self, 
                                                                  files_obj, 
                                                                  files_path):
-        print(f"The test path is: {files_path}")
-        files_obj.set_working_path(files_path)
-        assert files_obj.validate_tests_folder() is True, "Test failed the validation of the test folder"
+        print(f"The test param (path) is: {files_path}")
+        assert files_obj.validate_tests_folder(files_path) is True, "Test failed, the validation of the test folder path"
+        files_obj.set_working_path(files_path)   
 
         files_list = files_obj.get_files_from_path_into_list()
         assert len(files_list) > 0, "Test did not foind any test files"
@@ -32,21 +32,23 @@ class TestFilesToDict:
         files_obj.print_dict()
 
     # Parametrized fixture
-    @pytest.mark.parametrize("incorrect_files_path",
+    @pytest.mark.parametrize("files_path", # <---- this is a name of the fixture, each time the fixture will hold 1 path to test by a test
                             [
-                                (r"C:\Users\PRIVATE_ILANA\PHYTHON_HOW_TO\_repos\work_files_db_1\resources\Files_Travers\not_existing_file.txt"),
-                                (r"C:\Users\PRIVATE_ILANA\PHYTHON_HOW_TO\_repos\work_files_db_1\resources\Files_Travers\not_existing_files_folder"),
-                                (r"C:\Users\PRIVATE_ILANA\PHYTHON_HOW_TO\_repos\work_files_db_1\resources\Files_Travers\empty_files_folder"),
-                                (r"C:\Users\PRIVATE_ILANA\PHYTHON_HOW_TO\_repos\work_files_db_1\resources\Files_Travers\files_folder_with_empty_folder")
+                                (r"\resources\Files_Travers\empty_files_folder"),
+                                (r"\resources\Files_Travers\files_folder_with_empty_folder"),
+                                (r"\resources\Files_Travers\not_existing_file.txt"),
+                                (r"\resources\Files_Travers\not_existing_files_folder")                                
                             ])
     def test_travers_path_negative_cases(self, 
                                          files_obj, 
-                                         incorrect_files_path):
-        files_obj.set_working_path(incorrect_files_path)
+                                         files_path):
+        
+        print(f"The test param (path) is: {files_path}")        
 
         # AssertionError will occur if the dict will be empty (len = 0) - we will catch it as we expect for it to happen
         with pytest.raises(AssertionError):
-            assert files_obj.validate_tests_folder() is True, "Test failed the validation of the test folder"
+            assert files_obj.validate_tests_folder(files_path) is True, "Test failed the validation of the test folder"
+            files_obj.set_working_path(files_path)
 
             files_list = files_obj.get_files_from_path_into_list()
             assert len(files_list) > 0, "Test did not foind any test files"

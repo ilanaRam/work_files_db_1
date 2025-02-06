@@ -13,15 +13,12 @@ class FilesToDict:
         self.files_dict: Dict = {}
 
     def set_working_path(self, working_path: str):
-        self.working_path = working_path
-        print(f"\n\nWorking folder defined as: {working_path}")
+        self.working_path = os.getcwd() + working_path
+        print(f"\n\nWorking folder defined as: {self.working_path}")
 
-    def validate_tests_folder(self) -> bool:
-        print(f"\n\nChecking if the given path exists: {self.working_path} .....\n\n")
-
-        # this method check if path exists in file system - path can be to a file or a folder
-        print(f"Current working directory is: {os.getcwd()}, tested path is: {self.working_path}") 
-        if os.path.exists(self.working_path):
+    def validate_tests_folder(self, working_path: str) -> bool:
+        print(f"\n\nChecking if the given path exists: {os.getcwd() + working_path} .....\n\n")
+        if os.path.exists(os.getcwd() + working_path):
             print(f"Path exists!")
             return True
         else:

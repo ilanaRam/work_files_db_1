@@ -15,12 +15,13 @@ class TestFilesToDict:
     #Parametrized fixture
     @pytest.mark.parametrize("files_path",
                             [
-                                ("C:\\Users\\PRIVATE_ILANA\\PHYTHON_HOW_TO\\from_interviews\\Files_Travers\\files_folder"),
-                                ("C:\\Users\\PRIVATE_ILANA\\PHYTHON_HOW_TO\\from_interviews\\Files_Travers\\files_folder_single_file")
+                                (r"C:\Users\PRIVATE_ILANA\PHYTHON_HOW_TO\_repos\work_files_db_1\resources\Files_Travers\files_folder"),
+                                (r"C:\Users\PRIVATE_ILANA\PHYTHON_HOW_TO\_repos\work_files_db_1\resources\Files_Travers\files_folder_single_file")
                             ])
     def test_travers_path_get_all_files_existing_path_with_files(self, 
                                                                  files_obj, 
                                                                  files_path):
+        print(f"The test path is: {files_path}")
         files_obj.set_working_path(files_path)
         assert files_obj.validate_tests_folder() is True, "Test failed the validation of the test folder"
 
@@ -33,10 +34,10 @@ class TestFilesToDict:
     # Parametrized fixture
     @pytest.mark.parametrize("incorrect_files_path",
                             [
-                                ("C:\\Users\\PRIVATE_ILANA\\PHYTHON_HOW_TO\\from_interviews\\Files_Travers\\not_existing_file.txt"),
-                                ("C:\\Users\\PRIVATE_ILANA\\PHYTHON_HOW_TO\\from_interviews\\Files_Travers\\not_existing_files_folder"),
-                                ("C:\\Users\\PRIVATE_ILANA\\PHYTHON_HOW_TO\\from_interviews\\Files_Travers\\empty_files_folder"),
-                                ("C:\\Users\\PRIVATE_ILANA\\PHYTHON_HOW_TO\\from_interviews\\Files_Travers\\files_folder_with_empty_folder")
+                                (r"C:\Users\PRIVATE_ILANA\PHYTHON_HOW_TO\_repos\work_files_db_1\resources\Files_Travers\not_existing_file.txt"),
+                                (r"C:\Users\PRIVATE_ILANA\PHYTHON_HOW_TO\_repos\work_files_db_1\resources\Files_Travers\not_existing_files_folder"),
+                                (r"C:\Users\PRIVATE_ILANA\PHYTHON_HOW_TO\_repos\work_files_db_1\resources\Files_Travers\empty_files_folder"),
+                                (r"C:\Users\PRIVATE_ILANA\PHYTHON_HOW_TO\_repos\work_files_db_1\resources\Files_Travers\files_folder_with_empty_folder")
                             ])
     def test_travers_path_negative_cases(self, 
                                          files_obj, 

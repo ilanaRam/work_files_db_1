@@ -20,6 +20,7 @@ class FilesToDict:
         print(f"\n\nChecking if the given path exists: {self.working_path} .....\n\n")
 
         # this method check if path exists in file system - path can be to a file or a folder
+        print(f"Current working directory is: {os.getcwd()}, tested path is: {self.working_path}") 
         if os.path.exists(self.working_path):
             print(f"Path exists!")
             return True

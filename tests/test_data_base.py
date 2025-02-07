@@ -125,12 +125,22 @@ class TestDataBase:
             # way2: this way we convert model into struct and can get to each field of the stract. Here model is a dict. Each memver has 2 fileds:
             # source_file and date             
             file_obj = my_file_model(**file.model_dump())
-            print(f"File: {file_obj.source_file}, date: {file_obj.date}")           
-                
+            print(f"File: {file_obj.source_file}, date: {file_obj.date}")   
 
         # all will return True only if all iterations will be resulted with True, assert will be issued if all will not return True
         assert all(isinstance(file, my_file_model)
                     for file in files)
+    
+    def test_insert_files_create_sql_file(self, db_member, file_record):        
+        files = []
+        # Insert few files
+        print("Inserting 3 files into a table ...")
+        for i in range(1,4):
+            print(f"File: {i}{file_record['source_file']}, date: {file_record['date']}")
+            db_member.insert(f"{i}{file_record['source_file']}",                                     
+                               file_record["date"])
+        # Write SQL file
+        db_member.write_sql_file()        
 
     def test_insert_file_invalide_format(self, db_member):
         # test how DBClient handles database errors (inserting invalid data or making operations on closed connection)

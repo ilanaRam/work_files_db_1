@@ -8,6 +8,7 @@ from src.travers_path_get_files import FilesToDict
 WORKING_DIR = r"\resources\Files_Travers\files_folder"
 
 
+
 def main():
     # Initialize the database
     db_name = "files_store.db"
@@ -16,6 +17,7 @@ def main():
     # Use FilesToDict to find file paths    
     files_to_dict_obj = FilesToDict()
     
+    print("\n\n-- Preparing the files: ---------\n\n")
     if not files_to_dict_obj.validate_tests_folder(WORKING_DIR):
         print(f"The working directory: {WORKING_DIR}, does not exist ###")
         raise FileNotFoundError(f"The working directory: {WORKING_DIR}, does not exist ###")    
@@ -25,11 +27,11 @@ def main():
     if not files_to_dict_obj.get_files_from_list_into_dict(files_list):
         print(f"Failed to create a dict from test files ###")
         raise Exception(f"Failed to create a dict from test files ###")        
-    files_to_dict_obj.print_dict()
-    
+    files_to_dict_obj.print_dict()    
     files_dict = files_to_dict_obj.get_files_dict()
+   
     # Insert file paths into the database
-    print("\n\n-- Inserting files into DB: ---------\n\n")
+    print("\n\n-- Inserting files into SSQLite data base: ---------\n\n")
     for folder, file_list in files_dict.items():
         print(f"\nFolder is: {folder}")
         for file in file_list:
@@ -39,11 +41,14 @@ def main():
             database.insert(source_file=file, date=date)   
     print("--------------")
     
-    print("\n\n-- Retrieving files from SQLite database files into DB: ---------")
+    print("\n\n-- Retrieving (and printing) the files from SQLite database: ---------")
     # Optionally, retrieve and print all files from the database
     all_files = database.get_all_files()
     for file in all_files:
         print(f"File: {file.source_file}, Date: {file.date}")
+    
+    print("\n\n-- Preparing SQLite file database: ---------")
+    database.write_sql_file()    
     
     # Close the database connection
     database.close()

@@ -131,6 +131,32 @@ class TestDataBase:
         assert all(isinstance(file, my_file_model)
                     for file in files)
     
+    def test_create_sql_file(self, db_member, file_record):        
+        files = []
+        # Insert few files
+        print("Inserting 3 files into a table ...")
+        for i in range(1,4):
+            print(f"File: {i*3}{file_record['source_file']}, date: {file_record['date']}")
+            db_member.insert(source_file=f"{i*3}{file_record['source_file']}",                                     
+                             date=file_record["date"])
+        # Get all files from a table - we get already modeled items
+        files = db_member.get_all_files()
+        assert len(files) == 3
+        
+        for file in files:
+            # way1: files already modeled - so we can print them directly
+            print(f"File: {file.source_file}, date: {file.date}")
+
+            # way2: this way we convert model into struct and can get to each field of the stract. Here model is a dict. Each memver has 2 fileds:
+            # source_file and date             
+            file_obj = my_file_model(**file.model_dump())
+            print(f"File: {file_obj.source_file}, date: {file_obj.date}")   
+
+        # all will return True only if all iterations will be resulted with True, assert will be issued if all will not return True
+        assert all(isinstance(file, my_file_model)
+                    for file in files)
+        db_member.write_sql_file()
+    
     def test_insert_files_create_sql_file(self, db_member, file_record):        
         files = []
         # Insert few files

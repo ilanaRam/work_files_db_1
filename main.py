@@ -39,15 +39,14 @@ def main():
             date = time.strftime("%Y-%m-%d %H:%M:%S")
             print(f"Date is: {date}")
             database.insert(source_file=file, date=date)   
-    print("--------------")
-    
-    print("\n\n-- Retrieving (and printing) the files from SQLite database: ---------")
+        
+    print("\n\n-- Retrieving (and printing) the files from SQLite database: ---------\n\n")
     # Optionally, retrieve and print all files from the database
     all_files = database.get_all_files()
     for file in all_files:
         print(f"File: {file.source_file}, Date: {file.date}")
     
-    print("\n\n-- Preparing SQLite file database: ---------")
+    print("\n\n-- Preparing SQLite file database: ---------\n\n")
     database.write_sql_file()    
     
     # Close the database connection

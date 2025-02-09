@@ -33,3 +33,8 @@ by cmd:  git freeze > requirements.txt
  
 To install all required packages do: 
 pip install -r requirements.txt
+
+
+
+
+

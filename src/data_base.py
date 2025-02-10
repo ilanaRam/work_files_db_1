@@ -5,7 +5,7 @@ from src.model import my_file_model
 
 
 MY_FILES_TABLE = 'files_store'
-RESULTS_DIR = r"\results"
+RESULTS_FILE_FULL_PATH = r"/results/database_setup.sql"
 
 
 class DataBase:
@@ -169,7 +169,7 @@ class DataBase:
             return my_file
         
     def write_sql_file(self) -> None:
-        results_file = os.getcwd() + RESULTS_DIR + r"\database_setup.sql"
+        results_file = os.getcwd() + RESULTS_FILE_FULL_PATH
         print(f"Results file is: {results_file}")
 
         with open(results_file, 'w') as file:

@@ -5,7 +5,7 @@ from src.model import my_file_model
 import pytest
 from src.travers_path_get_files import FilesToDict
 
-WORKING_DIR = r"\resources\Files_Travers\files_folder"
+WORKING_DIR = r"/resources/Files_Travers/files_folder"
 
 
 

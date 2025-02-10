@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  app:
+    build: .                            # build: Builds the container using the Dockerfile in the current directory.
+    volumes:
+      - ./resources:/app/resources      # Mount resources folder from the host to the container
+      - ./results:/app/results          # Mounts the results folder from the host to the container.
+      - ./sqlite_db:/app/sqlite_db      # Mounts the sqlite_db volume to store the SQLite database persistently.
+    
+    networks:
+      - app-network
+    environment:
+      - DATABASE_PATH=/app/my_database.db # Sets an environment variable for the database path (DATABASE_PATH), which you can use inside your app to dynamically access the database.
+                                          # Example env var for SQLite path
+
+networks:                                 # Defines a custom network for your app
+  app-network:
+    driver: bridge
+
+volumes:
+  sqlite_db:                              # This section ensures that the SQLite database is stored persistently in a Docker volume
